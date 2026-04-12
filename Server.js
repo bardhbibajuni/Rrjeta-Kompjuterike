@@ -21,5 +21,9 @@ server.on("message", (msg, rinfo) => {
     const response = `Serveri ka pranuar: ${text}`;
     server.send(response, rinfo.port, rinfo.address);
 });
-
+server.bind(PORT, HOST, () => {
+    console.log(` UDP Serveri eshte on ne: 
+         IP: ${HOST} 
+         Porti:${PORT}`);
+});
 
