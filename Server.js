@@ -6,13 +6,27 @@ const HOST = "0.0.0.0";
 
 const server = dgram.createSocket("udp4");
 
+
+const clients = {
+    "192.168.1.10": { role: "admin" },
+    "192.168.1.11": { role: "reader" },
+    "192.168.1.12": { role: "reader" },
+    "192.168.1.13": { role: "reader" }
+};
+
 server.on("message", (msg, rinfo) => {
     const text = msg.toString();
+
+
+    const clientIP = rinfo.address;
+    const client = clients[clientIP] || { role: "reader" };
     
     console.log("\n==============================");
-    console.log(`IP: ${rinfo.address}`);
-    console.log(`PORT: ${rinfo.port}`);
-    console.log("==============================");
+    console.log(`Client IP: ${ip}`);
+    console.log(`Port: ${rinfo.port}`);
+    console.log(`Role: ${client.role}`);
+    console.log(`Message: ${text}`);
+    console.log("\n==============================");
 
 
     console.log(`Client i lidhur: ${rinfo.address}:${rinfo.port}`);
