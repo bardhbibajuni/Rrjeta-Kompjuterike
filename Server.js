@@ -2,7 +2,7 @@ const dgram = require("dgram");
 const fs = require("fs");
 
 const PORT = 4444;
-const HOST = "0.0.0.0";
+const HOST = "127.0.0.1";
 
 const server = dgram.createSocket("udp4");
 
@@ -16,28 +16,69 @@ const clients = {
 
 server.on("message", (msg, rinfo) => {
     const text = msg.toString();
-
-
     const clientIP = rinfo.address;
     const client = clients[clientIP] || { role: "reader" };
     
-    console.log("\n==============================");
-    console.log(`Client IP: ${ip}`);
-    console.log(`Port: ${rinfo.port}`);
-    console.log(`Role: ${client.role}`);
-    console.log(`Message: ${text}`);
-    console.log("\n==============================");
+    // Parse mesazhin: IP:PORT:actualMessage
+    const parts = text.split(":");
+    let clientPort = rinfo.port; // Default port
+    let actualMessage = text;
+    
+    if (parts.length >= 3 && !isNaN(parts[1])) {
+        // Format: IP:PORT:message
+        clientIP_from_msg = parts[0];
+        clientPort = parseInt(parts[1]);
+        actualMessage = parts.slice(2).join(":"); // Mesazhi (mund të ketë :)
+    }
+    
+    console.log("\n╔════════════════════════════════╗");
+    console.log("║     MESAZH NGA KLIENTI        ║");
+    console.log("╠════════════════════════════════╣");
+    console.log(`║ IP: ${clientIP}`);
+    console.log(`║ Port Klienti: ${clientPort}`);
+    console.log(`║ Roli: ${client.role}`);
+    console.log(`║ Mesazhi: ${actualMessage}`);
+    console.log("╚════════════════════════════════╝\n");
 
+    let response = "";
 
-    console.log(`Client i lidhur: ${rinfo.address}:${rinfo.port}`);
-    console.log("Mesazhi:", text);
+    // READ FILE (for all clients)
+    if (actualMessage === "READ_FILE") {
+        try {
+            const data = fs.readFileSync("data.txt", "utf8");
+            response = ` Përmbajtja e data.txt:\n${data}`;
+        } catch (err) {
+            response = " ERROR READING FILE";
+        }
+        server.send(response, clientPort, clientIP);
+        return;
+    }
 
-    const response = `Serveri ka pranuar: ${text}`;
-    server.send(response, rinfo.port, rinfo.address);
+   
+
+   
+    if (actualMessage === "LIST_PERMISSIONS") {
+        if (client.role !== "admin") {
+            response = " Nuk ke përmi të shohësh permisione (vetëm admin)";
+        } else {
+            response = ` Permisione për ${client.role}:\n`;
+            response += `   Read:    ✅\n`;
+            response += `   Write:   ✅\n`;
+            response += `   Execute: ✅`;
+        }
+        server.send(response, clientPort, clientIP);
+        return;
+    }
+
+    response = `✅ Serveri ka pranuar: "${actualMessage}"`;
+    server.send(response, clientPort, clientIP);
 });
 server.bind(PORT, HOST, () => {
-    console.log(` UDP Serveri eshte on ne: 
-         IP: ${HOST} 
-         Porti:${PORT}`);
+    console.log("\n╔════════════════════════════════╗");
+    console.log("║    UDP SERVERI ËSHTË ONLINE    ║");
+    console.log("╠════════════════════════════════╣");
+    console.log(`║ IP:    ${HOST}               ╣` );
+    console.log(`║ Port:  ${PORT}                    ╣` );
+    console.log("╠════════════════════════════════╣");
 });
 
