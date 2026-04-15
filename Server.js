@@ -42,7 +42,7 @@ server.on("message", (msg, rinfo) => {
 
     let response = "";
 
-    // READ FILE (for all clients)
+    // READ FILE (per krejt klientat)
     if (actualMessage === "READ_FILE") {
         try {
             const data = fs.readFileSync("data.txt", "utf8");
@@ -54,7 +54,22 @@ server.on("message", (msg, rinfo) => {
         return;
     }
 
-   
+    // WRITE FILE (Vetem per admin)
+    if (actualMessage.startsWith("WRITE_FILE:")) {
+        if (client.role !== "admin") {
+            response = "Nuk ke përmi për shkrim (write)";
+        } else {
+            const fileContent = actualMessage.substring(11); // Remove "WRITE_FILE:"
+            try {
+                fs.writeFileSync("data.txt", fileContent, "utf8");
+                response = "Fajlli u shkrua me sukses!";
+            } catch (err) {
+                response = `Error writing file: ${err.message}`;
+            }
+        }
+        server.send(response, clientPort, clientIP);
+        return;
+    }
 
    
     if (actualMessage === "LIST_PERMISSIONS") {
