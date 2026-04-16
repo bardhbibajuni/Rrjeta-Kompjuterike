@@ -19,3 +19,14 @@ const clientRoles = {
     "192.168.1.13": "reader",
     
 };
+function getLocalIP() {
+    const nets = os.networkInterfaces();
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            if(net.family === "IPv4" && !net.internal) {
+                return net.address;
+            }
+        }
+    }
+    const MY_IP = getLocalIP();
+    const MY_ROLE = clientRoles[MY_IP] || ""reader";
