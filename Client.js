@@ -11,3 +11,11 @@ const os       = require("os");
 const SERVER_PORT = 4444;
 const SERVER_HOST = "127.0.0.1";  // me ndrru ip me e shkru te fk
 const CLIENT_PORT = 5000;         
+
+const clientRoles = {
+    "192.168.1.10": "admin",
+    "192.168.1.11": "reader",
+    "192.168.1.12": "reader",
+    "192.168.1.13": "reader",
+    
+};
