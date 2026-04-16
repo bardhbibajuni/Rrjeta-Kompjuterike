@@ -19,16 +19,16 @@ server.on("message", (msg, rinfo) => {
     const clientIP = rinfo.address;
     const client = clients[clientIP] || { role: "reader" };
     
-    // Parse mesazhin: IP:PORT:actualMessage
+  
     const parts = text.split(":");
-    let clientPort = rinfo.port; // Default port
+    let clientPort = rinfo.port; 
     let actualMessage = text;
     
     if (parts.length >= 3 && !isNaN(parts[1])) {
-        // Format: IP:PORT:message
+   
         clientIP_from_msg = parts[0];
         clientPort = parseInt(parts[1]);
-        actualMessage = parts.slice(2).join(":"); // Mesazhi (mund të ketë :)
+        actualMessage = parts.slice(2).join(":"); 
     }
     
     console.log("\n╔════════════════════════════════╗");
