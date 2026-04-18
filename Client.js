@@ -66,6 +66,22 @@ client.on("error", (err) => {
     client.close();
     process.exit(1);
 });
+
+function sendToServer(command) {
+    const message = `${MY_IP}:${CLIENT_PORT}:{command}`;
+    const buffer = Buffer.from(message);
+
+    client.send(buffer, SERVER_PORT, SERVER_HOST, (err) => {
+        if(err) {
+            console.error(`Dergimi deshtoi: ${err.message}`);
+            showMenu();
+        }
+        else {
+            console.log(`\n[${getTime()}] Komanda u dergua: ${command}`);
+            console.log("Ne pritje te pergjigjes nga serveri...\n");
+        }
+    });
+}
     
 
 
