@@ -35,3 +35,20 @@ function getLocalIP() {
         input: process.stdin,
         output: process.stdout
     });
+ client.bind(CLIENT_PORT, () => {
+    console.log("\nUDP klienti u nis me sukses.");
+    console.log(`Roli: ${CLIENT_ROLE}`);
+    console.log(`IP e klientit: ${MY_IP}`);
+    console.log(`Porti i klientit: ${CLIENT_PORT}`);
+    console.log(`Serveri: ${SERVER_HOST}:${SERVER_PORT}\n`);
+
+     showMenu();
+ });
+
+
+
+
+
+                
+     
+
