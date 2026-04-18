@@ -28,8 +28,10 @@ function getLocalIP() {
             }
         }
     }
+    return "127.0.0.1";
+}
     const MY_IP = getLocalIP();
-    const MY_ROLE = clientRoles[MY_IP] || ""reader";
+    const MY_ROLE = clientRoles[MY_IP] || "reader";
     const client = dgram.createSocket("udp4");
     const rl = readline.createInterface({
         input: process.stdin,
@@ -37,7 +39,7 @@ function getLocalIP() {
     });
  client.bind(CLIENT_PORT, () => {
     console.log("\nUDP klienti u nis me sukses.");
-    console.log(`Roli: ${CLIENT_ROLE}`);
+    console.log(`Roli: ${MY_ROLE}`);
     console.log(`IP e klientit: ${MY_IP}`);
     console.log(`Porti i klientit: ${CLIENT_PORT}`);
     console.log(`Serveri: ${SERVER_HOST}:${SERVER_PORT}\n`);
@@ -47,9 +49,8 @@ function getLocalIP() {
     
 client.on("message", (msg) => {
     const response = msg.toString();
-    const time = getTime();
-
-    console.log(`\n[${time}] Pergjigje nga serveri:`);
+    
+    console.log("\n Pergjigje nga serveri:");
     console.log("--------------------------------");
 
     response.split("\n").forEach((line) => {
@@ -68,7 +69,7 @@ client.on("error", (err) => {
 });
 
 function sendToServer(command) {
-    const message = `${MY_IP}:${CLIENT_PORT}:{command}`;
+    const message = `${MY_IP}:${CLIENT_PORT}:${command}`;
     const buffer = Buffer.from(message);
 
     client.send(buffer, SERVER_PORT, SERVER_HOST, (err) => {
@@ -77,11 +78,12 @@ function sendToServer(command) {
             showMenu();
         }
         else {
-            console.log(`\n[${getTime()}] Komanda u dergua: ${command}`);
+            console.log(`\n>> U dergua: "${message}"`);
             console.log("Ne pritje te pergjigjes nga serveri...\n");
         }
     });
 }
+
     
 
 
