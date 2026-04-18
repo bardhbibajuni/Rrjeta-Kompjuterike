@@ -30,6 +30,7 @@ function getLocalIP() {
     }
     const MY_IP = getLocalIP();
     const MY_ROLE = clientRoles[MY_IP] || ""reader";
+    const client = dgram.createSocket("udp4");
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
