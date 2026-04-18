@@ -44,6 +44,22 @@ function getLocalIP() {
 
      showMenu();
  });
+    
+client.on("message", (msg) => {
+    const response = msg.toString();
+    const time = getTime();
+
+    console.log(`\n[${time}] Pergjigje nga serveri:`);
+    console.log("--------------------------------");
+
+    response.split("\n").forEach((line) => {
+        console.log("> " + line);
+    });
+
+    console.log("--------------------------------\n");
+
+    showMenu();
+});
 
 
 
