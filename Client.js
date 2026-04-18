@@ -84,6 +84,26 @@ function sendToServer(command) {
     });
 }
 
+function showMenu() {
+    console.log("===============================");
+    console.log(`Menu e klientit (${MY_ROLE})`);
+    console.log("===============================");
+
+    if (MY_ROLE ==="admin") {
+        console.log("1. READ_FILE");
+        console.log("2. WRITE_FILE");
+        console.log("3. LIST_PERMISSIONS");
+        console.log("4. SEND_MESSAGE");
+        console.log("5. EXIT");
+    }
+    else {
+        console.log("1. READ_FILE");
+        console.log("2. SEND_MESSAGE");
+        console.log("3. EXIT");
+    }
+
+    rl.question("\nZgjedh opsionin: ", handleInput);
+}
     
 
 
