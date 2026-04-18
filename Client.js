@@ -61,6 +61,12 @@ client.on("message", (msg) => {
     showMenu();
 });
 
+client.on("error", (err) => {
+    console.error(`Gabim ne socket: ${err.message}`);
+    client.close();
+    process.exit(1);
+});
+    
 
 
 
