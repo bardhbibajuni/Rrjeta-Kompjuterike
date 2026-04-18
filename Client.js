@@ -30,3 +30,7 @@ function getLocalIP() {
     }
     const MY_IP = getLocalIP();
     const MY_ROLE = clientRoles[MY_IP] || ""reader";
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
