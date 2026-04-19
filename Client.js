@@ -105,7 +105,29 @@ function showMenu() {
     rl.question("\nZgjedh opsionin: ", handleInput);
 }
     
+function handleInput(input) {
+    const choice = input.trim();
 
+    if (CLIENT_ROLE === "admin") {
+        switch (choice) {
+            case "1":
+                sendToServer("READ_FILE");
+                break;
+
+            case "2":
+                rl.question("Shkruj permbajtjen e re: ", (content) => {
+                    if (content.trim() === "") {
+                        console.log("Teksti nuk mund te jete bosh.\n");
+                        showMenu();
+                    } else {
+                        sendToServer(`WRITE_FILE:${content.trim()}`);
+                    }
+                });
+                break;
+
+            case "3":
+                sendToServer("LIST_PERMISSIONS");
+                break;
 
 
 
