@@ -12,13 +12,7 @@ const SERVER_PORT = 4444;
 const SERVER_HOST = "127.0.0.1";  // me ndrru ip me e shkru te fk
 const CLIENT_PORT = 5000;         
 
-const clientRoles = {
-    "192.168.1.10": "admin",
-    "192.168.1.11": "reader",
-    "192.168.1.12": "reader",
-    "192.168.1.13": "reader",
-    
-};
+
 function getLocalIP() {
     const nets = os.networkInterfaces();
     for (const name of Object.keys(nets)) {
@@ -39,7 +33,7 @@ function getLocalIP() {
     });
  client.bind(CLIENT_PORT, () => {
     console.log("\nUDP klienti u nis me sukses.");
-    console.log(`Roli: ${MY_ROLE}`);
+ 
     console.log(`IP e klientit: ${MY_IP}`);
     console.log(`Porti i klientit: ${CLIENT_PORT}`);
     console.log(`Serveri: ${SERVER_HOST}:${SERVER_PORT}\n`);
