@@ -151,7 +151,36 @@ function handleInput(input) {
                 showMenu();
         }
 
+ } else if (CLIENT_ROLE === "readonly") {
+        switch (choice) {
+            case "1":
+                sendToServer("READ_FILE");
+                break;
 
+            case "2":
+                rl.question("Shkruaj mesazhin: ", (msg) => {
+                    if (msg.trim() === "") {
+                        console.log("Mesazhi nuk mund të jetë bosh.\n");
+                        showMenu();
+                    } else {
+                        sendToServer(msg.trim());
+                    }
+                });
+                break;
+
+            case "3":
+                console.log("\nKlienti u mbyll.\n");
+                rl.close();
+                client.close();
+                process.exit(0);
+                break;
+
+            default:
+                console.log("Opsion i pavlefshëm.\n");
+                showMenu();
+        }
+    }
+}
                 
      
 
