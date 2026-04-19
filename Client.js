@@ -128,7 +128,28 @@ function handleInput(input) {
             case "3":
                 sendToServer("LIST_PERMISSIONS");
                 break;
+          case "4":
+                rl.question("Shkruj mesazhin: ", (msg) => {
+                    if (msg.trim() === "") {
+                        console.log("Mesazhi nuk mund të jete bosh.\n");
+                        showMenu();
+                    } else {
+                        sendToServer(msg.trim());
+                    }
+                });
+                break;
 
+            case "5":
+                console.log("\nKlienti u mbyll.\n");
+                rl.close();
+                client.close();
+                process.exit(0);
+                break;
+
+            default:
+                console.log("Opsion i pavlefshëm.\n");
+                showMenu();
+        }
 
 
                 
