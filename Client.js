@@ -131,7 +131,7 @@ function handleInput(input) {
           case "4":
                 rl.question("Shkruj mesazhin: ", (msg) => {
                     if (msg.trim() === "") {
-                        console.log("Mesazhi nuk mund të jete bosh.\n");
+                        console.log("Mesazhi nuk mund te jete bosh.\n");
                         showMenu();
                     } else {
                         sendToServer(msg.trim());
@@ -147,7 +147,7 @@ function handleInput(input) {
                 break;
 
             default:
-                console.log("Opsion i pavlefshëm.\n");
+                console.log("Opsion i pavlefshem.\n");
                 showMenu();
         }
 
@@ -176,7 +176,7 @@ function handleInput(input) {
                 break;
 
             default:
-                console.log("Opsion i pavlefshëm.\n");
+                console.log("Opsion i pavlefshem.\n");
                 showMenu();
         }
     }
